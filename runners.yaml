@@ -1,0 +1,43 @@
+apiVersion: actions.summerwind.dev/v1alpha1
+kind: RunnerDeployment
+metadata:
+  name: my-arc-runner
+  namespace: actions
+spec:
+  template:
+    spec:
+      containers:
+      - env:
+        - name: RUNNER_GRACEFUL_STOP_TIMEOUT
+          value: "290"
+        image: docker.io/summerwind/actions-runner-dind:v2.319.1-ubuntu-20.04-1be410b
+        name: runner
+        resources:
+          limits:
+            ephemeral-storage: 15Gi
+            memory: 2Gi
+          requests:
+            cpu: "1"
+            ephemeral-storage: 4Gi
+            memory: 2Gi
+        volumeMounts:
+        - mountPath: /dockerhub-credentials
+          name: dockerhub-credentials
+          readOnly: true
+      dockerdContainerResources: {}
+      dockerdWithinRunnerContainer: true
+      image: ""
+      labels:
+      - test-runner
+      organization: taskteck
+      resources: {}
+      securityContext:
+        fsGroup: 1000
+        runAsGroup: 1000
+        runAsUser: 1000
+      terminationGracePeriodSeconds: 0
+      volumes:
+      - name: dockerhub-credentials
+        secret:
+          optional: true
+          secretName: dockerhub-credentials
