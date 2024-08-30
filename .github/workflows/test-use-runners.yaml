@@ -4,7 +4,7 @@ on: workflow_dispatch
 
 jobs:
   test-runner:
-    runs-on: "runners-scale-set"
+    runs-on: "small-runner-scale-set"
 
     steps:
       - name: Checkout
