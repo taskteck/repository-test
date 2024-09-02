@@ -1,0 +1,56 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: arc-controller
+spec:
+  generators:
+  - list:
+      elements:
+      - cluster: https://kubernetes.default.svc
+        cluster-name: arc
+        valuesFile: values-arc-controller-stg.yaml
+        destinationNamespace: actions
+  template:
+    metadata:
+      name: '{{cluster-name}}-controller'
+    spec:
+      project: default
+      sources:
+      - repoURL: 'https://github.com/taskteck/repository-test.git'
+        targetRevision: 'develop'
+        ref: my-repo
+      - repoURL: 'ghcr.io/actions/actions-runner-controller-charts'
+        chart: 'gha-runner-scale-set-controller'
+        targetRevision: '0.9.3'
+        helm:
+          valueFiles:
+            - '$my-repo/values-arc-controller.yaml'
+            - '$my-repo/{{valuesFile}}'
+      destination:
+        server: '{{cluster}}'
+        namespace: '{{destinationNamespace}}' 
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - ApplyOutOfSyncOnly=true
+          - ServerSideApply=true
+          - Validate=false
+
+# project: default
+# source:
+#   repoURL: 'oci://ghcr.io/actions/actions-runner-controller-charts'
+#   chart: 'gha-runner-scale-set-controller'
+#   targetRevision: '0.9.3'
+#   helm:
+#     valueFiles:
+#       - values-arc-controller.yaml
+#       - values-arc-controller-stg.yaml
+# destination:
+#   server: https://kubernetes.default.svc
+#   namespace: actions
+# syncPolicy:
+#   automated:
+#     prune: true
+#     selfHeal: true

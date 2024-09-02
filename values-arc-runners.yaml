@@ -1,6 +1,6 @@
 
 ## name of the runner scale set to create.  Defaults to the helm release name
-runnerScaleSetName: "small-runner-scale-set"
+runnerScaleSetName: "{{.Values.flavor}}-runner-scale-set"
 template:
   spec:
     initContainers:
@@ -11,23 +11,6 @@ template:
         - name: dind-externals
           mountPath: /home/runner/tmpDir
     containers:
-    - name: runner
-      image: ghcr.io/actions/actions-runner:latest
-      command: ["/home/runner/run.sh"]
-      env:
-        - name: DOCKER_HOST
-          value: unix:///var/run/docker.sock
-      volumeMounts:
-        - name: work
-          mountPath: /home/runner/_work
-        - name: dind-sock
-          mountPath: /var/run
-      resources:
-         requests:
-            memory: "3Gi"
-            cpu: "1"
-         limits:
-            memory: "3Gi"
     - name: dind
       image: docker:dind
       args:

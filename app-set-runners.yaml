@@ -1,0 +1,46 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: arc-runners
+spec:
+  generators:
+    - matrix:
+        generators:
+        - list:
+            elements:
+              - flavor: small
+              - flavor: medium
+        - list:
+            elements:
+            - cluster: https://kubernetes.default.svc
+              cluster-name: arc
+              valuesFile: values-arc-runners-stg.yaml
+              destinationNamespace: actions
+  template:
+    metadata:
+      name: '{{cluster-name}}-runners-{{flavor}}'
+    spec:
+      project: default
+      sources:
+      - repoURL: 'https://github.com/taskteck/repository-test.git'
+        targetRevision: 'develop'
+        ref: my-repo
+      - repoURL: 'ghcr.io/actions/actions-runner-controller-charts'
+        chart: 'gha-runner-scale-set'
+        targetRevision: '0.9.3'
+        helm:
+          valueFiles:
+            - '$my-repo/values-arc-runners.yaml'
+            - '$my-repo/{{valuesFile}}'
+            - '$my-repo/{{flavor}}-{{valuesFile}}'
+      destination:
+        server: '{{cluster}}'
+        namespace: '{{destinationNamespace}}' 
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - ApplyOutOfSyncOnly=true
+          - ServerSideApply=true
+          - Validate=false
