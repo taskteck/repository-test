@@ -4,21 +4,15 @@ metadata:
   name: arc-runners
 spec:
   generators:
-    - matrix:
-        generators:
-        - list:
-            elements:
-              - flavor: small
-              - flavor: medium
-        - list:
-            elements:
-            - cluster: https://kubernetes.default.svc
-              cluster-name: arc
-              valuesFile: values-arc-runners-stg.yaml
-              destinationNamespace: actions
+    - list:
+        elements:
+        - cluster: https://kubernetes.default.svc
+          cluster-name: arc
+          valuesFile: values-arc-runners-stg.yaml
+          destinationNamespace: actions
   template:
     metadata:
-      name: '{{cluster-name}}-runners-{{flavor}}'
+      name: '{{cluster-name}}-runners-small'
     spec:
       project: default
       sources:
@@ -32,7 +26,7 @@ spec:
           valueFiles:
             - '$my-repo/values-arc-runners.yaml'
             - '$my-repo/{{valuesFile}}'
-            - '$my-repo/{{flavor}}-{{valuesFile}}'
+            - '$my-repo/small-{{valuesFile}}'
       destination:
         server: '{{cluster}}'
         namespace: '{{destinationNamespace}}' 
