@@ -24,7 +24,7 @@ spec:
         targetRevision: '0.9.3'
         helm:
           valueFiles:
-            - '$my-repo/values-arc-runners.yaml'
+            - '$my-repo/values-teste.yaml'
             - '$my-repo/{{valuesFile}}'
             - '$my-repo/small-{{valuesFile}}'
       destination:
