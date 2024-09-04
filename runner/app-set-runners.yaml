@@ -17,7 +17,7 @@ spec:
       project: default
       sources:
       - repoURL: 'https://github.com/taskteck/repository-test.git'
-        targetRevision: 'develop'
+        targetRevision: 'dev'
         ref: my-repo
       - repoURL: 'ghcr.io/actions/actions-runner-controller-charts'
         chart: 'gha-runner-scale-set'

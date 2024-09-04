@@ -17,14 +17,14 @@ spec:
       project: default
       sources:
       - repoURL: 'https://github.com/taskteck/repository-test.git'
-        targetRevision: 'develop'
+        targetRevision: 'dev'
         ref: my-repo
       - repoURL: 'ghcr.io/actions/actions-runner-controller-charts'
         chart: 'gha-runner-scale-set-controller'
         targetRevision: '0.9.3'
         helm:
           valueFiles:
-            - '$my-repo/values-arc-controller.yaml'
+            - '$my-repo/controller/values-arc-controller.yaml'
             - '$my-repo/{{valuesFile}}'
       destination:
         server: '{{cluster}}'
