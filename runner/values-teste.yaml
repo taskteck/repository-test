@@ -2,7 +2,6 @@
 ## ex: https://github.com/myorg/myrepo or https://github.com/myorg
 githubConfigUrl: "https://github.com/taskteck"
 
-
 template:
   spec:
     initContainers:

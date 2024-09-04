@@ -27,6 +27,13 @@ spec:
             - '$my-repo/runner/values-teste.yaml'
             - '$my-repo/runner/{{valuesFile}}'
             - '$my-repo/runner/small-{{valuesFile}}'
+          parameters:
+            - name: runnerScaleSetName
+              value: "test-runner-scale-set"
+            - name: githubConfigUrl
+              value: "https://github.com/taskteck"
+            - name: githubConfigSecret
+              value: "controller-manager"
       destination:
         server: '{{cluster}}'
         namespace: '{{destinationNamespace}}' 
