@@ -24,9 +24,9 @@ spec:
         targetRevision: '0.9.3'
         helm:
           valueFiles:
-            - '$my-repo/values-teste.yaml'
-            - '$my-repo/{{valuesFile}}'
-            - '$my-repo/small-{{valuesFile}}'
+            - '$my-repo/runner/values-teste.yaml'
+            - '$my-repo/runner/{{valuesFile}}'
+            - '$my-repo/runner/small-{{valuesFile}}'
       destination:
         server: '{{cluster}}'
         namespace: '{{destinationNamespace}}' 
