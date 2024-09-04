@@ -1,0 +1,46 @@
+## githubConfigUrl is the GitHub url for where you want to configure runners
+## ex: https://github.com/myorg/myrepo or https://github.com/myorg
+githubConfigUrl: "https://github.com/taskteck"
+
+
+template:
+  spec:
+    initContainers:
+    - name: init-dind-externals
+      image: ghcr.io/actions/actions-runner:latest
+      command: ["cp", "-r", "-v", "/home/runner/externals/.", "/home/runner/tmpDir/"]
+      volumeMounts:
+        - name: dind-externals
+          mountPath: /home/runner/tmpDir
+    containers:
+    - name: dind
+      image: docker:dind
+      args:
+        - dockerd
+        - --host=unix:///var/run/docker.sock
+        - --group=$(DOCKER_GROUP_GID)
+      env:
+        - name: DOCKER_GROUP_GID
+          value: "123"
+      securityContext:
+        privileged: true
+      volumeMounts:
+        - name: work
+          mountPath: /home/runner/_work
+        - name: dind-sock
+          mountPath: /var/run
+        - name: dind-externals
+          mountPath: /home/runner/externals
+    volumes:
+    - name: work
+      emptyDir: {}
+    - name: dind-sock
+      emptyDir: {}
+    - name: dind-externals
+      emptyDir: {}
+      
+controllerServiceAccount:
+  namespace: actions
+  name: arc-controller-gha-rs-controller
+
+runnerScaleSetName: "test-runner-scale-set"
