@@ -2,8 +2,6 @@
 ## ex: https://github.com/myorg/myrepo or https://github.com/myorg
 githubConfigUrl: "https://github.com/taskteck"
 
-githubConfigSecret:
-  github_token: "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"
 
 template:
   spec:
