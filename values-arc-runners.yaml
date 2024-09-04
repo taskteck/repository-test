@@ -1,9 +1,13 @@
 
 ## name of the runner scale set to create.  Defaults to the helm release name
-runnerScaleSetName: "{{.Values.flavor}}-runner-scale-set"
+runnerScaleSetName: "test-runner-scale-set"
+
+githubConfigUrl: "https://github.com/taskteck"
+
 controllerServiceAccount:
   namespace: actions
   name: arc-controller-gha-rs-controller
+
 template:
   spec:
     initContainers:
