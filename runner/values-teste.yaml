@@ -2,7 +2,8 @@
 ## ex: https://github.com/myorg/myrepo or https://github.com/myorg
 githubConfigUrl: "https://github.com/taskteck"
 
-minRunners: 1
+minRunners: 0
+maxRunners: 5
 
 template:
   metadata:
