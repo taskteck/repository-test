@@ -38,19 +38,3 @@ spec:
           - ServerSideApply=true
           - Validate=false
 
-# project: default
-# source:
-#   repoURL: 'oci://ghcr.io/actions/actions-runner-controller-charts'
-#   chart: 'gha-runner-scale-set-controller'
-#   targetRevision: '0.9.3'
-#   helm:
-#     valueFiles:
-#       - values-arc-controller.yaml
-#       - values-arc-controller-stg.yaml
-# destination:
-#   server: https://kubernetes.default.svc
-#   namespace: actions
-# syncPolicy:
-#   automated:
-#     prune: true
-#     selfHeal: true
