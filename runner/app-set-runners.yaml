@@ -9,7 +9,7 @@ spec:
         - cluster: https://kubernetes.default.svc
           cluster-name: arc
           valuesFile: values-arc-runners-stg.yaml
-          destinationNamespace: actions
+          destinationNamespace: arc-runners
   template:
     metadata:
       name: '{{cluster-name}}-runners-small'
@@ -39,7 +39,7 @@ spec:
         namespace: '{{destinationNamespace}}' 
       syncPolicy:
         automated:
-          prune: true
+          prune: false
           selfHeal: true
         syncOptions:
           - ApplyOutOfSyncOnly=true

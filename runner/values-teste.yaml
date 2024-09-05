@@ -2,7 +2,12 @@
 ## ex: https://github.com/myorg/myrepo or https://github.com/myorg
 githubConfigUrl: "https://github.com/taskteck"
 
+minRunners: 1
+
 template:
+  metadata:
+    labels:
+      argocd.argoproj.io/sync-options: SkipPrune
   spec:
     initContainers:
     - name: init-dind-externals

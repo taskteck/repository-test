@@ -1,0 +1,2 @@
+podLabels: 
+  argocd.argoproj.io/sync-options: SkipPrune
